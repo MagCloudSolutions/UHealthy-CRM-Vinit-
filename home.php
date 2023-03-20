@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $numExistRows = mysqli_num_rows($result);////
     if ($result) {
         echo "<script>alert('data Inserted')</script>";
+
     }
 
 
