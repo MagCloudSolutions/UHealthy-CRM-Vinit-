@@ -16,6 +16,7 @@ body {
 }
 .container1 {
 	margin: 0 20px 0 20px;
+	font-size: small;
 }
 .wrapper {
 	/* max-width: 700px; */
