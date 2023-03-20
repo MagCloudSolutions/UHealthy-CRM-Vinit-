@@ -177,5 +177,7 @@ form .button input:hover {
 }
 
 table {
-	max-width: 1200px;
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
 }
