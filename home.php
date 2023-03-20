@@ -9,23 +9,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $number = $_POST['number'];
     $email = $_POST['email'];
     $state = $_POST['state'];
+    $gender = $_POST['gender'];
     $age = $_POST['age'];
     $height = $_POST['height'];
     $weight = $_POST['weight'];
     $lookingfor = $_POST['lookingfor'];
-    $attended = $_POST['attended'];
-    $expecteddate = $_POST['expecteddate'];
+    $attended_dc = $_POST['attended_dc'];
+    $exp_date_dc = $_POST['exp_date_dc'];
+    $attended_mhf = $_POST['attended_mhf'];
+    $exp_date_mhf = $_POST['exp_date_mhf'];
     $currentstatus = $_POST['currentstatus'];
     $leaddate = $_POST['leaddate'];
     $comments = $_POST['comments'];
 
-    $sql = "SELECT * from user where username = '$username'";
-    $result = mysqli_query($conn, $existsql);
-    $numExistRows = mysqli_num_rows($result);
-    if ($numExistRows > 0) {
-        $query = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `assigned_to`, `followup_date`, `is_organic`, `adset_name`, `campaign`, `vehicle`, `partner`, `platform`, `lead_id`, `cusomer_disc`, `home_listing`, `retailer_id`, `created_at`) VALUES ('1', '$name', '$number', '$email', '$state', '$age', '$height', '$weight', '$lookingfor', '$attended', '$expecteddate', '$currentstatus', '$leaddate', '$comments', '$assignedto', '$followupdate', '$isorganic', '$adsetname', '$compaign', '$vehicle', '$leadid', '$customer', '$home', '$retailid', current_timestamp())";
+    // $sql = "SELECT * from user where username = '$username'";
+    // $result = mysqli_query($conn, $sql);
+    $query = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `created_at`) VALUES (null, '$name', '$number', '$email','$gender', '$state', '$age', '$height', '$weight', '$lookingfor', '$attended_dc', '$exp_date_dc', '$attended_mhf', '$exp_date_mhf', '$currentstatus', '$leaddate', '$comments', current_timestamp())";
 
-
+    $result = mysqli_query($conn, $query);
+    // $numExistRows = mysqli_num_rows($result);////
+    if ($result) {
+        echo "<script>alert('data Inserted')</script>";
     }
 
 
@@ -65,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="input-box">
                     <span class="details">State</span>
-                    <input name="sate" type="text" placeholder="Enter your state" required>
+                    <input name="state" type="text" placeholder="Enter your state" required>
                 </div>
 
                 <div class="input-box">
@@ -86,11 +90,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="input-box">
                     <span class="details">Attended "Demo Club"</span>
-                    <input name="attended" type="text" placeholder="" required>
+                    <input name="attended_dc" type="text" placeholder="" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Expected Date Mission Healthy Family</span>
-                    <input name="expecteddate" type="date" placeholder="Enter Expected Date" required>
+                    <span class="details">Expected Date "Demo Club"</span>
+                    <input name="exp_date_dc" type="date" placeholder="Enter Expected Date" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Attended "Mission Healthy Family"</span>
+                    <input name="attended_mhf" type="text" placeholder="" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Expected Date "Mission Healthy Family"</span>
+                    <input name="exp_date_mhf" type="date" placeholder="Enter Expected Date" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Current Status</span>
