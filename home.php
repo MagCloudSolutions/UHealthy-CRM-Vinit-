@@ -18,16 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $currentstatus = $_POST['currentstatus'];
     $leaddate = $_POST['leaddate'];
     $comments = $_POST['comments'];
-    $assignedto = $_POST['assignedto'];
-    $followupdate = $_POST['followupdate'];
-    $isorganic = $_POST['isorganic'];
-    $adsetname = $_POST['adsetname'];
-    $compaign = $_POST['compaign'];
-    $vehicle = $_POST['vehicle'];
-    $leadid = $_POST['leadid'];
-    $customer = $_POST['customer'];
-    $home = $_POST['home'];
-    $retailid = $_POST['retailid'];
+
     $sql = "SELECT * from user where username = '$username'";
     $result = mysqli_query($conn, $existsql);
     $numExistRows = mysqli_num_rows($result);
