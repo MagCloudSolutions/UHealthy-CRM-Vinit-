@@ -50,23 +50,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
             </div>
         </div>
     </nav>
-    <div class="search">
+    <div class="">
         <form class="search" action="data.php" method="post">
-            <input type="text" name="search" style="margin: 10px;padding:10px;border-radius:10px" required>
-            <select name="select" class="form-select" aria-label="Default select example"
-                style="margin: 10px;padding:10px;">
+            <input type="text" id="search" name="search" style="margin: 10px;padding:10px;border-radius:10px;width:100%"
+                required>
+            <div class="input-group date_search" id="date_search" style="margin: 10px;padding:10px;border-radius:10px;width:100%>
+                <span className=" input-group-text">From :</span>
+                <input type="date" name="from" id="date1" className="btn btn-outline-dark
+                   form-control" />
+                <span className="input-group-text">To :</span>
+                <input type="date" name="to" id="date2" onInput={search} className="btn btn-outline-dark
+                   form-control" />
 
-    </div>
-    <select onclick="date()" name="select" class="form-select" aria-label="Default select example"
-        style="margin: 10px;padding:10px;" id="searchselect">
-        <option value="looking_for">Looking For</option>
-        <option value="attended_dc">Attended Demo Club</option>
-        <option value="attended_mhf">Attended Mission Healthy Family</option>
-        <option value="current_status">Current Status</option>
-        <option value="exp_date_dc">Expected Date Demo club</option>
-    </select>
-    <button type="submit" class="btn btn-danger" style="margin: 10px;padding:10px;">Search</button>
-    </form>
+            </div>
+            <select onclick="date()" name="select" class="form-select" aria-label="Default select example"
+                style="margin: 10px;padding:10px;" id="searchselect">
+                <option value="looking_for">Looking For</option>
+                <option value="attended_dc">Attended Demo Club</option>
+                <option value="attended_mhf">Attended Mission Healthy Family</option>
+                <option value="current_status">Current Status</option>
+                <option value="exp_date_dc">Expected Date Demo club</option>
+            </select>
+            <button type="submit" class="btn btn-danger" style="margin: 10px;padding:10px;">Search</button>
+        </form>
     </div>
 
     <div class="container1">
@@ -146,9 +152,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
             $search = $_POST['search'];
             $select = $_POST['select'];
-            $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'";
+            $from = $_POST['from'];
+            $to = $_POST['to'];
+
+            if ($from != "" && $to != "") {
+                $sql = "SELECT * from data where $select >= '{$from}%' AND $select <= '{$to}%'";
+
+            } elseif ($search != "" && $select != "") {
+                $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'";
+            }
+
+
             $result = mysqli_query($conn, $sql);
             $num = mysqli_num_rows($result);
+
             if ($num > 0) {
                 echo "<table id='table' class='table  table-light table-bordered table-striped my-4'>";
                 echo "<thead class='table-primary'>";
@@ -222,7 +239,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
         </script>
     <script src="https://code.jquery.com/jquery-3.6.4.js"
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <script src="index.js"></script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
