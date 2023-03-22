@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +16,7 @@
         <title>Data</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="homestyle.css">
+        <link rel="stylesheet" href="css/homestyle.css">
     </head>
 
     <body>
@@ -31,6 +40,12 @@
                             <a class="nav-link" href="Logout.php">Logout</a>
                         </li>
                     </ul>
+
+                    <div>
+                        <?php
+                        echo '<h5>' . $_SESSION['username'] . '</h5>';
+                        ?>
+                    </div>
 
                 </div>
             </div>
