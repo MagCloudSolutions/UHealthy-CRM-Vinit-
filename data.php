@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +16,7 @@
     <title>Data</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="homestyle.css">
+    <link rel="stylesheet" href="css/homestyle.css">
 </head>
 
 <body>
@@ -32,32 +41,32 @@
                     </li>
                 </ul>
 
+                <div>
+                    <?php
+                    echo '<h5>' . $_SESSION['username'] . '</h5>';
+                    ?>
+                </div>
+
             </div>
         </div>
     </nav>
-    <div class="">
+    <div class="search">
         <form class="search" action="data.php" method="post">
-            <input type="text" id="search" name="search" style="margin: 10px;padding:10px;border-radius:10px;width:100%"
-                required>
-            <div class="input-group date_search" id="date_search" style="margin: 10px;padding:10px;border-radius:10px;width:100%>
-                <span className=" input-group-text">From :</span>
-                <input type="date" id="date1" className="btn btn-outline-dark
-                   form-control" />
-                <span className="input-group-text">To :</span>
-                <input type="date" id="date2" onInput={search} className="btn btn-outline-dark
-                   form-control" />
+            <input type="text" name="search" style="margin: 10px;padding:10px;border-radius:10px" required>
+            <select name="select" class="form-select" aria-label="Default select example"
+                style="margin: 10px;padding:10px;">
 
-            </div>
-            <select onclick="date()" name="select" class="form-select" aria-label="Default select example"
-                style="margin: 10px;padding:10px;" id="searchselect">
-                <option value="looking_for">Looking For</option>
-                <option value="attended_dc">Attended Demo Club</option>
-                <option value="attended_mhf">Attended Mission Healthy Family</option>
-                <option value="current_status">Current Status</option>
-                <option value="exp_date_dc">Expected Date Demo club</option>
-            </select>
-            <button type="submit" class="btn btn-danger" style="margin: 10px;padding:10px;">Search</button>
-        </form>
+    </div>
+    <select onclick="date()" name="select" class="form-select" aria-label="Default select example"
+        style="margin: 10px;padding:10px;" id="searchselect">
+        <option value="looking_for">Looking For</option>
+        <option value="attended_dc">Attended Demo Club</option>
+        <option value="attended_mhf">Attended Mission Healthy Family</option>
+        <option value="current_status">Current Status</option>
+        <option value="exp_date_dc">Expected Date Demo club</option>
+    </select>
+    <button type="submit" class="btn btn-danger" style="margin: 10px;padding:10px;">Search</button>
+    </form>
     </div>
 
     <div class="container1">

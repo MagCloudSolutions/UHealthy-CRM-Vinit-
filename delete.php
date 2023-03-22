@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     include "connection.php";
     $s_no = $_GET['s_no'];
@@ -16,6 +22,11 @@ alert('Error')
     echo "<script>
 alert('connection Error')
 </script>";
+}
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
 }
 
 

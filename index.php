@@ -31,24 +31,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Login</title>
-    <!-- <link rel="stylesheet" type="text/css" href="slide navbar style.css"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <title>Login</title>
+        <!-- <link rel="stylesheet" type="text/css" href="slide navbar style.css"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
 
-<body>
+    <body>
 
 
-    <form class="login" action="index.php" method="post">
-        <h2>Welcome, User!</h2>
-        <p>Please log in</p>
-        <input type="text" name="username" placeholder="User Name" />
-        <input type="password" name="password" placeholder="Password" />
-        <input type="submit" value="Log In" />
+        <form class="login" action="index.php" method="post">
+            <h2>Welcome, User!</h2>
+            <p>Please log in</p>
+            <input type="text" name="username" placeholder="User Name" />
+            <input type="password" name="password" placeholder="Password" />
+            <input type="submit" value="Log In" />
 
-    </form>
-</body>
+        </form>
+    </body>
 
 </html>
