@@ -54,17 +54,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
         <form class="search" action="data.php" method="post">
             <input type="text" id="search" name="search"
                 style="margin: 10px;padding:10px;border-radius:10px;width:100%">
-            <div class="input-group date_search" id="date_search" style="margin: 10px;padding:10px;border-radius:10px;width:100%>
-                <span className=" input-group-text">From :</span>
-                <input type="date" name="from" id="date1" className="btn btn-outline-dark
-                   form-control" />
-                <span className="input-group-text">To :</span>
-                <input type="date" name="to" id="date2" onInput={search} className="btn btn-outline-dark
-                   form-control" />
+            <div class="input-group date_search" id="date_search"
+                style="padding:10px;border-radius:10px;width:100%;align-items: center;">
+                <span style="margin:5px">From :</span>
+                <input type="date" name="from" id="date1" class="form-select" />
+                <span style="margin:5px">To :</span>
+                <input type="date" name="to" id="date2" onInput={search} class="form-select" />
 
             </div>
-            <select onclick="date()" name="select" class="form-select" aria-label="Default select example"
-                style="margin: 10px;padding:10px;" id="searchselect">
+            <select onclick="date()" name="select" class="form-select" style="width:65%;margin: 10px;"
+                aria-label="Default select example" style="margin: 10px;padding:10px;" id="searchselect">
                 <option value="looking_for">Looking For</option>
                 <option value="attended_dc">Attended Demo Club</option>
                 <option value="attended_mhf">Attended Mission Healthy Family</option>
@@ -101,9 +100,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                 echo "<th scope='col'>Expected Date Demo club</th>";
                 echo "<th scope='col'>Attended MHF</th>";
                 echo "<th scope='col'>Expected Date MHF</th>";
+
+
                 echo "<th scope='col'>Current Status</th>";
                 echo "<th scope='col'>Lead Date</th>";
                 echo "<th scope='col'>Comments</th>";
+                echo "<th scope='col'>Follow Up Date</th>";
                 echo "<th scope='col'></th>";
                 echo "</tr>";
                 echo "</thead>";
@@ -123,11 +125,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                     echo "<td>" . $row['looking_for'] . '</td>';
                     echo "<td>" . $row['attended_dc'] . '</td>';
                     echo "<td>" . $row['exp_date_dc'] . '</td>';
+
                     echo "<td>" . $row['attended_mhf'] . '</td>';
                     echo "<td>" . $row['exp_date_mhf'] . '</td>';
                     echo "<td>" . $row['current_status'] . '</td>';
                     echo "<td>" . $row['lead_date'] . '</td>';
                     echo "<td>" . $row['comments'] . '</td>';
+                    echo "<td>" . $row['followup_date'] . '</td>';
                     echo "<td>";
                     echo '<div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -155,82 +159,97 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
             $from = $_POST['from'];
             $to = $_POST['to'];
 
+
             if ($from != "" && $to != "") {
                 $sql = "SELECT * from data where $select >= '{$from}%' AND $select <= '{$to}%'";
+                $result = mysqli_query($conn, $sql);
+                $num = mysqli_num_rows($result);
 
             } elseif ($search != "" && $select != "") {
                 $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'";
+                $result = mysqli_query($conn, $sql);
+                $num = mysqli_num_rows($result);
             } else {
-                echo "Data Not Found";
+                echo "<script>alert('Field Empty')</script>";
+                header("Refresh:0");
+
             }
 
 
-            $result = mysqli_query($conn, $sql);
-            $num = mysqli_num_rows($result);
-
-            if ($num > 0) {
-                echo "<table id='table' class='table  table-light table-bordered table-striped my-4'>";
-                echo "<thead class='table-primary'>";
-                echo "<tr>";
-                echo "<th scope='col'>S_No</th>";
-                echo "<th scope='col'>Name</th>";
-                echo "<th scope='col'>Phone Number</th>";
-                echo "<th scope='col'>Email</th>";
-                echo "<th scope='col'>State</th>";
-                echo "<th scope='col'>Gender</th>";
-                echo "<th scope='col'>Age</th>";
-                echo "<th scope='col'>Height</th>";
-                echo "<th scope='col'>Weight</th>";
-                echo "<th scope='col'>Looking For</th>";
-                echo "<th scope='col'>Attended Demo Club</th>";
-                echo "<th scope='col'>Expected Date Demo club</th>";
-                echo "<th scope='col'>Attended MHF</th>";
-                echo "<th scope='col'>Expected Date MHF</th>";
-                echo "<th scope='col'>Current Status</th>";
-                echo "<th scope='col'>Lead Date</th>";
-                echo "<th scope='col'>Comments</th>";
-                echo "<th scope='col'></th>";
-                echo "</tr>";
-                echo "</thead>";
-                $i = 0;
-                while ($row = mysqli_fetch_assoc($result)) {
-
+            if (isset($num)) {
+                if ($num > 0) {
+                    echo "<table id='table' class='table  table-light table-bordered table-striped my-4'>";
+                    echo "<thead class='table-primary'>";
                     echo "<tr>";
-                    echo "<th scope='row'>" . $i + 1 . "</th>";
-                    echo "<td colspan='1'>" . $row['name'] . "</td>";
-                    echo "<td>" . $row['phone'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['state'] . "</td>";
-                    echo "<td>" . $row['gender'] . "</td>";
-                    echo "<td>" . $row['age'] . '</td>';
-                    echo "<td>" . $row['height'] . '</td>';
-                    echo "<td>" . $row['weight'] . '</td>';
-                    echo "<td>" . $row['looking_for'] . '</td>';
-                    echo "<td>" . $row['attended_dc'] . '</td>';
-                    echo "<td>" . $row['exp_date_dc'] . '</td>';
-                    echo "<td>" . $row['attended_mhf'] . '</td>';
-                    echo "<td>" . $row['exp_date_mhf'] . '</td>';
-                    echo "<td>" . $row['current_status'] . '</td>';
-                    echo "<td>" . $row['lead_date'] . '</td>';
-                    echo "<td>" . $row['comments'] . '</td>';
-                    echo "<td>";
-                    echo '<div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Select
-                </button>
-                <ul class="dropdown-menu">
-                  <li><form action="update.php" method="get"><input style="display:none" name="s_no" value=' . $row["s_no"] . '><button class="dropdown-item" type="submit" >Update</button></form></li>
-                  <li><form action="delete.php" method="get"><input style="display:none" name="s_no" value=' . $row["s_no"] . '><button class="dropdown-item" type="submit" >Delete</button></form></li>
-                  
-                </ul>
-              </div>';
-                    echo "</td>";
-                    $i++;
+                    echo "<th scope='col'>S_No</th>";
+                    echo "<th scope='col'>Name</th>";
+                    echo "<th scope='col'>Phone Number</th>";
+                    echo "<th scope='col'>Email</th>";
+                    echo "<th scope='col'>State</th>";
+                    echo "<th scope='col'>Gender</th>";
+                    echo "<th scope='col'>Age</th>";
+                    echo "<th scope='col'>Height</th>";
+                    echo "<th scope='col'>Weight</th>";
+                    echo "<th scope='col'>Looking For</th>";
+                    echo "<th scope='col'>Attended Demo Club</th>";
+                    echo "<th scope='col'>Expected Date Demo club</th>";
+                    echo "<th scope='col'>Attended MHF</th>";
+                    echo "<th scope='col'>Expected Date MHF</th>";
 
+                    echo "<th scope='col'>Current Status</th>";
+                    echo "<th scope='col'>Lead Date</th>";
+                    echo "<th scope='col'>Comments</th>";
+                    echo "<th scope='col'>Follow Up Date</th>";
+                    echo "<th scope='col'></th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    $i = 0;
+                    while ($row = mysqli_fetch_assoc($result)) {
+
+                        echo "<tr>";
+                        echo "<th scope='row'>" . $i + 1 . "</th>";
+                        echo "<td colspan='1'>" . $row['name'] . "</td>";
+                        echo "<td>" . $row['phone'] . "</td>";
+                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td>" . $row['state'] . "</td>";
+                        echo "<td>" . $row['gender'] . "</td>";
+                        echo "<td>" . $row['age'] . '</td>';
+                        echo "<td>" . $row['height'] . '</td>';
+                        echo "<td>" . $row['weight'] . '</td>';
+                        echo "<td>" . $row['looking_for'] . '</td>';
+                        echo "<td>" . $row['attended_dc'] . '</td>';
+                        echo "<td>" . $row['exp_date_dc'] . '</td>';
+
+                        echo "<td>" . $row['attended_mhf'] . '</td>';
+
+                        echo "<td>" . $row['exp_date_mhf'] . '</td>';
+
+                        echo "<td>" . $row['current_status'] . '</td>';
+                        echo "<td>" . $row['lead_date'] . '</td>';
+                        echo "<td>" . $row['comments'] . '</td>';
+                        echo "<td>" . $row['followup_date'] . '</td>';
+                        echo "<td>";
+                        echo '<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Select
+    </button>
+    <ul class="dropdown-menu">
+      <li><form action="update.php" method="get"><input style="display:none" name="s_no" value=' . $row["s_no"] . '><button class="dropdown-item" type="submit" >Update</button></form></li>
+      <li><form action="delete.php" method="get"><input style="display:none" name="s_no" value=' . $row["s_no"] . '><button class="dropdown-item" type="submit" >Delete</button></form></li>
+      
+    </ul>
+  </div>';
+                        echo "</td>";
+                        $i++;
+
+                    }
+                } else {
+                    echo "Data Not found";
                 }
             } else {
-                echo "Data Not found";
+                header('Location:data.php');
             }
+
         }
         ?>
 
