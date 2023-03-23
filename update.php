@@ -106,15 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-box">
                             <span class="details">Name</span>
                             <input style="display:none" name="s_no" type="text" value="' . $id . '" placeholder="Enter your name" required>
-                            <input name="name" type="text" value="' . $row['name'] . '" placeholder="Enter your name" disabled required>
+                            <input name="name" type="text" value="' . $row['name'] . '" placeholder="Enter your name" readonly="readonly">
                         </div>
                         <div class="input-box">
                             <span class="details">Phone Number</span>
-                            <input name="number" type="number" value="' . $row['phone'] . '" placeholder="Enter your numer" disabled required>
+                            <input name="number" type="number" value="' . $row['phone'] . '" placeholder="Enter your numer" readonly="readonly">
                         </div>
                         <div class="input-box">
                             <span class="details">E-Mail</span>
-                            <input name="email" type="text" value="' . $row['email'] . '" placeholder="Enter your email" disabled required>
+                            <input name="email" type="text" value="' . $row['email'] . '" placeholder="Enter your email" readonly="readonly">
                         </div>
                         <div class="input-box">
                             <span class="details">State</span>
