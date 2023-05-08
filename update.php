@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="input-box">
                             <span class="details">Phone Number</span>
-                            <input name="number" type="number" value="' . $row['phone'] . '" placeholder="Enter your numer" readonly="readonly">
+                            <input name="number" type="number" value="' . $row['phone'] . '" placeholder="Enter your numer" >
                         </div>
                         <div class="input-box">
                             <span class="details">E-Mail</span>
@@ -96,83 +96,130 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="input-box">
                             <span class="details">State</span>
-                            <input name="state" type="text" value="' . $row['state'] . '" placeholder="Enter your state" required>
+                            <input name="state" type="text" value="' . $row['state'] . '" placeholder="Enter your state" >
                         </div>
     
                         <div class="input-box">
                             <span class="details">Age</span>
-                            <input name="age" type="Number" value="' . $row['age'] . '" placeholder="Enter Your Age" required>
+                            <input name="age" type="Number" value="' . $row['age'] . '" placeholder="Enter Your Age" >
                         </div>
                         <div class="input-box">
                             <span class="details">Height(cms)</span>
-                            <input name="height" type="Number" value="' . $row['height'] . '" placeholder="Enter Your Height" required>
+                            <input name="height" type="Number" value="' . $row['height'] . '" placeholder="Enter Your Height" >
                         </div>
                         <div class="input-box">
                             <span class="details">Weight(Kg)</span>
-                            <input name="weight" type="Number" value="' . $row['weight'] . '" placeholder="Enter Your Weight" required>
+                            <input name="weight" type="Number" value="' . $row['weight'] . '" placeholder="Enter Your Weight" >
                         </div>
                         <div class="input-box">
                             <span class="details">Looking For</span>
-                            <select name="lookingfor" value="' . $row['looking_for'] . '" type="text" placeholder="Looking For?" required>
-                                <option value="Healthy Weight Loss">Healthy Weight Loss</option>
-                                <option value="Healthy Weight Gain">Healthy Weight Gain</option>
-                                <option value="Overall Health">Overall Health</option>
-                            </select>
+                            <select name="lookingfor" value="' . $row['looking_for'] . '" type="text" placeholder="Looking For?" >
+                                <option value="' . $row['looking_for'] . '">' . $row['looking_for'] . '</option>';
+                    if ($row['looking_for'] == "Healthy Weight Loss") {
+                        echo '<option value="Healthy Weight Gain">Healthy Weight Gain</option>
+                                <option value="Overall Health">Overall Health</option>';
+                    } else if ($row['looking_for'] == "Healthy Weight Gain") {
+                        echo '<option value="Healthy Weight Loss">Healthy Weight Loss</option><option value="Overall Health">Overall Health</option>';
+                    } else {
+                        echo '<option value="Healthy Weight Loss">Healthy Weight Loss</option>
+                                <option value="Healthy Weight Gain">Healthy Weight Gain</option>';
+                    }
+
+                    echo '</select>
                         </div>
                         <div class="input-box">
                             <span class="details">Attended "Demo Club"</span>
                             <!-- <input name="attended_dc" type="text" placeholder="" required> -->
-                            <select name="attended_dc" value="' . $row['attended_dc'] . '" type="text" placeholder="" required>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
+                            <select name="attended_dc" value="' . $row['attended_dc'] . '" type="text" placeholder="" >
+                                <option value="' . $row['attended_dc'] . '">' . $row['attended_dc'] . '</option>';
+
+                    if ($row['attended_dc'] == "No") {
+                        echo '<option value="Yes">Yes</option>';
+                    } else {
+                        echo '<option value="No">No</option>';
+                    }
+                    echo '</select>
                         </div>
     
     
                         <div class="input-box">
                             <span class="details">Expected Date "Demo Club"</span>
-                            <input name="exp_date_dc" value="' . $row['exp_date_dc'] . '" type="date" placeholder="Enter Expected Date" required>
+                            <input name="exp_date_dc" value="' . $row['exp_date_dc'] . '" type="date" placeholder="Enter Expected Date">
                         </div>
                         <div class="input-box">
                             <span class="details">Attended "Mission Healthy Family"</span>
-                            <select name="attended_mhf" value="' . $row['attended_mhf'] . '" type="text" placeholder="" required>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
+                            <select name="attended_mhf" value="' . $row['attended_mhf'] . '" type="text" placeholder="">
+                                <option value="' . $row['attended_mhf'] . '">' . $row['attended_mhf'] . '</option>';
+                    if ($row['attended_mhf'] == "No") {
+                        echo '<option value="Yes">Yes</option>';
+                    } else {
+                        echo '<option value="No">No</option>';
+                    }
+
+
+                    echo '</select>
                         </div>
                         <div class="input-box">
                             <span class="details">Expected Date "Mission Healthy Family"</span>
-                            <input name="exp_date_mhf" value="' . $row['exp_date_mhf'] . '" type="date" placeholder="Enter Expected Date" required>
+                            <input name="exp_date_mhf" value="' . $row['exp_date_mhf'] . '" type="date" placeholder="Enter Expected Date">
                         </div>
                         
                         <div class="input-box">
                             <span class="details">Current Status</span>
-                            <select name="currentstatus" value="' . $row['current_status'] . '" type="text" required>
-                                <option value="Paid & Joined Club">Paid & Joined Club</option>
-                                <option value="Interested but did not  pay">Interested but did not pay</option>
-                                <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
-                                <option value="Not Interested">Not Interested</option>
-                            </select>
+                            <select name="currentstatus" value="' . $row['current_status'] . '" type="text" >
+                                <option value="' . $row['current_status'] . '">' . $row['current_status'] . '</option>';
+                    if ($row['current_status'] == "Paid & Joined Club") {
+                        echo '<option value="Interested but did not  pay">Interested but did not pay</option><option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option><option value="Not Interested">Not Interested</option>';
+                    } else if ($row['current_status'] == "Interested but did not pay") {
+                        echo '<option value="Paid & Joined Club">Paid & Joined Club</option>
+                                    <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
+                                <option value="Not Interested">Not Interested</option>';
+                    } else if ($row['current_status'] == "Not Reachable/Call Not Picked") {
+                        echo '<option value="Paid & Joined Club">Paid & Joined Club</option>
+                                    <option value="Interested but did not pay">Interested but did not pay</option>
+                                    <option value="Not Interested">Not Interested</option>';
+
+                    } else {
+                        echo '<option value="Paid & Joined Club">Paid & Joined Club</option>
+                                    <option value="Interested but did not pay">Interested but did not pay</option>
+                                    <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>';
+                    }
+
+                    echo '</select>
                         </div>
                         <div class="input-box">
                             <span class="details">Lead Date</span>
-                            <input name="leaddate" value="' . $row['lead_date'] . '" type="date" placeholder="Enter Lead Date" required>
+                            <input name="leaddate" value="' . $row['lead_date'] . '" type="date" placeholder="Enter Lead Date">
                         </div>
                         <div class="input-box">
                             <span class="details">Comments</span>
-                            <input name="comments" value="' . $row['comments'] . '" type="text" placeholder="Enter comment" required>
+                            <input name="comments" value="' . $row['comments'] . '" type="text" placeholder="Enter comment" >
                         </div>
                         <div class="input-box">
                              <span class="details">Follow Up Date</span>
-                            <input name="followupdate" value="' . $row['followup_date'] . '" type="date" placeholder="Enter date" required>
+                            <input name="followupdate" value="' . $row['followup_date'] . '" type="date" placeholder="Enter date">
                         </div>
                         <div class="input-box">
                             <span class="details">Gender</span>
-                            <select name="gender" value="' . $row['gender'] . '" type="text" required>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                            <select name="gender" value="' . $row['gender'] . '" type="text">
+                                <option value="' . $row['gender'] . '">' . $row['gender'] . '</option>';
+
+                    if ($row["gender"] == "Male") {
+                        echo '<option value="Female">Female</option>';
+                    } else {
+                        echo '<option value="Male">Male</option>';
+                    }
+
+
+
+                    echo '</select>
                         </div>
+                        <div class="input-box">
+                            <span class="details">Assign</span>
+                            <select name="gender"  type="text">
+                                <option value=""></option></select>
+                        </div>
+                        
                     </div>
                     <div class="button">
                         <input type="submit" value="Update Your Details">
@@ -187,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-        </script>
+            </script>
     </body>
 
 </html>
