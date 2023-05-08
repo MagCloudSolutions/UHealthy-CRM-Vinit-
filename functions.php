@@ -186,9 +186,9 @@ function login($username, $password)
 
     } else {
 
-        $_SESSION['user'] = $username;
-
-        header("location:account.php");
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        header('Location: home.php');
 
     }
 
