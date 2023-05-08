@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h2>Welcome, User!</h2>
             <p>Please log in</p>
             <input type="text" name="username" placeholder="User Name" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="text" name="password" placeholder="Password" />
             <input type="submit" value="Log In" />
 
         </form>
