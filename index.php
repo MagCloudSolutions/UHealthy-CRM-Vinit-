@@ -3,6 +3,7 @@
 
 require "functions.php";
 
+
 if (isset($_POST['submit'])) {
     $response = login($_POST['username'], $_POST['password']);
 }
@@ -22,12 +23,12 @@ if (isset($_POST['submit'])) {
     <body>
 
 
-        <form class="login" action="index.php" method="post">
+        <form class="login" action="" method="post">
             <h2>Welcome, User!</h2>
             <p>Please log in</p>
             <input type="text" name="username" value="<?php echo @$_POST['username'] ?>" placeholder="User Name" />
             <input type="text" value="<?php echo @$_POST['password'] ?>" name="password" placeholder="Password" />
-            <input type="submit" value="Log In" />
+            <input type="submit" name="submit" value="Log In" />
             <p class="error"><?php echo @$response; ?></p>
 
         </form>

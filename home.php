@@ -1,6 +1,23 @@
 <?php
 
-session_start();
+require "functions.php";
+
+if (!isset($_SESSION['username'])) {
+
+
+    header('location: index.php');
+
+    exit();
+
+}
+if (!isset($_SESSION['admin'])) {
+
+
+    header('location: index.php');
+
+    exit();
+
+}
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     header('Location: index.php');
     exit;
