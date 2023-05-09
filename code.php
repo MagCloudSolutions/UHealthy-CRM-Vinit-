@@ -1,5 +1,5 @@
 <?php
-session_start();
+include "functions.php";
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     header('Location: index.php');
     exit;
@@ -46,10 +46,24 @@ if (isset($_POST['save_excel_data'])) {
                 $lead_date = $row['15'];
                 $comment = $row['16'];
                 $follow_up_date = $row['17'];
+                $assigned_to = $row['18'];
+                $caller_id = $row['19'];
 
-                $query = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `followup_date`) VALUES 
-                                              (null ,'$name' ,'$phone_number' ,'$email' , '$state' ,'$gender' ,'$age' ,'$height' ,'$weight' ,'$looking_for' ,'$attended_dc' ,'$expected_dc' ,'$attended_mhf' ,'$expected_mhf' , '$current_status' ,'$lead_date' ,'$comment' ,'$follow_up_date')";
-                $result = mysqli_query($conn, $query);
+                $mysqli = connect();
+                $sql = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `followup_date`, `assigned_to`,`id`) VALUES 
+                                            (null ,'$name' ,'$phone_number' ,'$email' , '$state' ,'$gender' ,'$age' ,'$height' ,'$weight' ,'$looking_for' ,'$attended_dc' ,'$expected_dc' ,'$attended_mhf' ,'$expected_mhf' , '$current_status' ,'$lead_date' ,'$comment' ,'$follow_up_date' ,'$assigned_to','$caller_id')";
+
+
+                $stmt = $mysqli->prepare($sql);
+
+                // $stmt->bind_param("s", $username);
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                // $data = $result->fetch_assoc();
+
                 $msg = true;
             } else {
                 $count = "1";

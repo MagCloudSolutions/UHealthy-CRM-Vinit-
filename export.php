@@ -1,13 +1,18 @@
 <?php
-session_start();
+include "functions.php";
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
+}
+
+if (!@isset($_SESSION['admin']) || @$_SESSION['admin'] != 1) {
     header('Location: index.php');
     exit;
 }
 
 ?>
 <?php
-include "connection.php";
+
 require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -16,13 +21,23 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 if (isset($_POST['export_excel_btn'])) {
+
+    $mysqli = connect();
     $file_ext_name = $_POST['export_file_type'];
     $fileName = "Data-management";
 
-    $query = "SELECT * FROM data";
-    $query_run = mysqli_query($conn, $query);
+    $sql = "SELECT * FROM data";
+    $stmt = $mysqli->prepare($sql);
 
-    if (mysqli_num_rows($query_run) > 0) {
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $num = $stmt->affected_rows;
+
+    // $data = $result->fetch_assoc();
+
+    if ($num > 0) {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -44,10 +59,12 @@ if (isset($_POST['export_excel_btn'])) {
         $sheet->setCellValue('P1', 'Lead Date');
         $sheet->setCellValue('Q1', 'Comments');
         $sheet->setCellValue('R1', 'Follow Up Date');
+        $sheet->setCellValue('S1', 'Assigned To');
+        $sheet->setCellValue('T1', 'Caller ID');
 
         $rowCount = 2;
         $i = 1;
-        foreach ($query_run as $data) {
+        foreach ($result as $data) {
             $sheet->setCellValue('A' . $rowCount, $i);
             $sheet->setCellValue('B' . $rowCount, $data['name']);
             $sheet->setCellValue('C' . $rowCount, $data['phone']);
@@ -66,6 +83,8 @@ if (isset($_POST['export_excel_btn'])) {
             $sheet->setCellValue('P' . $rowCount, $data['lead_date']);
             $sheet->setCellValue('Q' . $rowCount, $data['comments']);
             $sheet->setCellValue('R' . $rowCount, $data['followup_date']);
+            $sheet->setCellValue('S' . $rowCount, $data['assigned_to']);
+            $sheet->setCellValue('T' . $rowCount, $data['id']);
             $rowCount++;
             $i++;
         }

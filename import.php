@@ -1,6 +1,13 @@
 <?php
-session_start();
+
+
+require "functions.php";
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+    header('Location: index.php');
+    exit;
+}
+if (!@isset($_SESSION['admin']) || @$_SESSION['admin'] != 1) {
     header('Location: index.php');
     exit;
 }
@@ -34,7 +41,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                 <form action="code.php" method="POST" enctype="multipart/form-data">
 
                     <input type="file" name="import_file" class="form-control" />
-                    <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
+                    <button type="submit" name="save_excel_data" class="btn btn-outline-dark mt-3">Import</button>
 
                 </form>
             </div>
