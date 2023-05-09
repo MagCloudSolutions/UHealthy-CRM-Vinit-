@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
             <h2>Welcome, User!</h2>
             <p>Please log in</p>
             <input type="text" name="username" value="<?php echo @$_POST['username'] ?>" placeholder="User Name" />
-            <input type="text" value="<?php echo @$_POST['password'] ?>" name="password" placeholder="Password" />
+            <input type="password" value="<?php echo @$_POST['password'] ?>" name="password" placeholder="Password" />
             <input type="submit" name="submit" value="Log In" />
             <p class="error"><?php echo @$response; ?></p>
 

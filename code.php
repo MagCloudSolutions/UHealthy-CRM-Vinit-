@@ -16,7 +16,6 @@ if (isset($_POST['save_excel_data'])) {
     $fileName = $_FILES['import_file']['name'];
     $file_ext = pathinfo($fileName, PATHINFO_EXTENSION);
 
-    // $allowed_ext = ['xls', 'csv', 'xlsx'];
     $allowed_ext = array('xls', 'csv', 'xlsx');
 
     if (in_array($file_ext, $allowed_ext)) {
@@ -50,19 +49,16 @@ if (isset($_POST['save_excel_data'])) {
                 $caller_id = $row['19'];
 
                 $mysqli = connect();
+
                 $sql = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `followup_date`, `assigned_to`,`id`) VALUES 
                                             (null ,'$name' ,'$phone_number' ,'$email' , '$state' ,'$gender' ,'$age' ,'$height' ,'$weight' ,'$looking_for' ,'$attended_dc' ,'$expected_dc' ,'$attended_mhf' ,'$expected_mhf' , '$current_status' ,'$lead_date' ,'$comment' ,'$follow_up_date' ,'$assigned_to','$caller_id')";
 
 
                 $stmt = $mysqli->prepare($sql);
 
-                // $stmt->bind_param("s", $username);
-
                 $stmt->execute();
 
                 $result = $stmt->get_result();
-
-                // $data = $result->fetch_assoc();
 
                 $msg = true;
             } else {

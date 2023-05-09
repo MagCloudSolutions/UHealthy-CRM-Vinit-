@@ -35,8 +35,6 @@ if (isset($_POST['export_excel_btn'])) {
 
     $num = $stmt->affected_rows;
 
-    // $data = $result->fetch_assoc();
-
     if ($num > 0) {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
