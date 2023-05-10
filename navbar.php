@@ -13,15 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="data.php">Data</a>
                 </li>
-                <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                    ?>
+
                 <li class="nav-item">
                     <a class="nav-link" href="import.php">Import Excel</a>
                 </li>
-                <?php
-                }
 
-                ?>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>

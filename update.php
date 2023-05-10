@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
     $currentstatus = $_POST['currentstatus'];
     $leaddate = $_POST['leaddate'];
     $comments = $_POST['comments'];
-    $caller_id = $_POST['assigned_to'];
+
 
     $sql = "SELECT username from user where s_no = ?";
 
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 
     $caller_name = $row['username'];
 
-    $sql = "UPDATE `data` SET `name` = '$name', `phone` = '$number', `email` = '$email', `state` = '$state', `gender` = '$gender', `age` = '$age', `height` = '$height', `weight` = '$weight', `looking_for` = '$lookingfor', `attended_dc` = '$attended_dc', `exp_date_dc` = '$exp_date_dc', `attended_mhf` = '$attended_mhf', `exp_date_mhf` = '$exp_date_mhf', `current_status` = '$currentstatus', `lead_date` = '$leaddate', `comments` = '$comments', `followup_date`= '$followupdate',`assigned_to` = '$caller_name',`id` = '$caller_id' WHERE `data`.`s_no` = '$id';";
+    $sql = "UPDATE `data` SET `name` = '$name', `phone` = '$number', `email` = '$email', `state` = '$state', `gender` = '$gender', `age` = '$age', `height` = '$height', `weight` = '$weight', `looking_for` = '$lookingfor', `attended_dc` = '$attended_dc', `exp_date_dc` = '$exp_date_dc', `attended_mhf` = '$attended_mhf', `exp_date_mhf` = '$exp_date_mhf', `current_status` = '$currentstatus', `lead_date` = '$leaddate', `comments` = '$comments', `followup_date`= '$followupdate',`id` = '$caller_id' WHERE `data`.`s_no` = '$id';";
 
 
     $stmt = $mysqli->prepare($sql);
@@ -300,8 +300,7 @@ if (isset($_POST['submit'])) {
 
                         </select>
                     </div>
-                    <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                ?>
+
                     <div class="input-box">
                         <span class="details">Assign</span>
                         <select name="assigned_to" type="text">
@@ -331,10 +330,7 @@ if (isset($_POST['submit'])) {
                                         ?>
                         </select>
                     </div>
-                    <?php
-                            }
 
-                            ?>
 
                 </div>
                 <div class="button">

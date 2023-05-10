@@ -1,19 +1,9 @@
 <?php
 require "functions.php";
-
-if (!isset($_SESSION['username'])) {
-
-    header('location: index.php');
-
-    exit();
-
-}
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || !isset($_SESSION['username'])) {
     header('Location: index.php');
     exit;
 }
-
 ?>
 
 <!doctype html>
@@ -62,24 +52,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $mysqli = connect();
-                if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-                    $sql = "SELECT * from data";
+                $sql = "SELECT * from data WHERE assigned_to=?";
+                $stmt = $mysqli->prepare($sql);
 
-                    $stmt = $mysqli->prepare($sql);
-
-
-                }
-                if (isset($_SESSION['caller']) && $_SESSION['caller'] == 1) {
-
-                    $sql = "SELECT * FROM data WHERE id=?";
-
-                    $stmt = $mysqli->prepare($sql);
-
-                    $stmt->bind_param('s', $_SESSION['user_id']);
-
-                }
-
-
+                $stmt->bind_param('s', $_SESSION['username']);
                 $stmt->execute();
 
                 $result = $stmt->get_result();
@@ -112,11 +88,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                 <th scope='col'>Lead Date</th>
                                 <th scope='col'>Comments</th>
                                 <th scope='col'>Follow Up Date</th>
-                                <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                    ?>
-                                    <th scope='col'>Assigned To</th>
-                                    <?php
-                                }
+
+                                <th scope='col'>Assigned To</th>
+                                <?php
+
 
 
                                 echo "<th scope='col'></th>";
@@ -144,32 +119,21 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                     <td><?php echo $row['lead_date'] ?></td>
                                     <td><?php echo $row['comments'] ?></td>
                                     <td><?php echo $row['followup_date'] ?></td>
-                                    <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                        ?>
-                                        <td><?php echo $row['assigned_to'] ?></td>
-                                        <?php
-                                    }
 
-                                    ?>
+                                    <td><?php echo $row['assigned_to'] ?></td>
+
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Select
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <form action="update.php" method="get"><input style="display:none" name="s_no"
-                                                            value="<?php echo $row["s_no"] ?>"><button class="dropdown-item"
-                                                            type="submit">Update</button></form>
-                                                </li>
-                                                <li>
-                                                    <form action="delete.php" method="get"><input style="display:none" name="s_no"
-                                                            value="<?php echo $row["s_no"] ?>"><button class="dropdown-item"
-                                                            type="submit">Delete</button></form>
-                                                </li>
 
-                                            </ul>
+
+
+                                            <form action="update.php" method="get"><input style="display:none" name="s_no"
+                                                    value="<?php echo $row["s_no"] ?>"><button class="btn"
+                                                    type="submit">Update</button></form>
+
+
+
+
                                         </div>
                                     </td>
 
@@ -177,17 +141,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                     $i++;
                                 }
                                 echo "</table>";
-                                ?>         <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                             ?>
-                                    <form action="export.php" method="POST" style="display:flex;margin-top:35px">
-                                        <select name="export_file_type" class="form-control" style="width:25%">
-                                            <option value="xlsx">XLSX</option>
-                                            <option value="xls">XLS</option>
-                                            <option value="csv">CSV</option>
-                                        </select>
-                                        <button type="submit" name="export_excel_btn" class="btn  btn-outline-light"
-                                            style="padding:10px 40px;font-weight:700;margin-left:10px">Export</button>
-                                    </form><?php }
+                                ?>
+                                <form action="export.php" method="POST" style="display:flex;margin-top:35px">
+                                    <select name="export_file_type" class="form-control" style="width:25%">
+                                        <option value="xlsx">XLSX</option>
+                                        <option value="xls">XLS</option>
+                                        <option value="csv">CSV</option>
+                                    </select>
+                                    <button type="submit" name="export_excel_btn" class="btn  btn-outline-light"
+                                        style="padding:10px 40px;font-weight:700;margin-left:10px">Export</button>
+                                </form><?php
                 } else {
                     echo "No Data Found";
                 }
@@ -200,24 +163,17 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                 $from = $_POST['from'];
                 $to = $_POST['to'];
                 if (
-                    $from
-                    != "" && $to != ""
+                    $from != "" && $to != ""
                 ) {
 
-                    if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
 
-                        $sql = "SELECT * from data where $select >= '{$from}%' AND $select <= '{$to}%'";
 
-                        $stmt = $mysqli->prepare($sql);
+                    $sql = "SELECT * from data where $select >= '{$from}%' AND $select <= '{$to}%' AND assigned_to=?";
 
-                    } else {
+                    $stmt = $mysqli->prepare($sql);
 
-                        $sql = "SELECT * from data where $select >= '{$from}%' AND $select <= '{$to}%' AND id=?";
+                    $stmt->bind_param('s', $_SESSION['username']);
 
-                        $stmt = $mysqli->prepare($sql);
-
-                        $stmt->bind_param('s', $_SESSION['user_id']);
-                    }
 
                     $stmt->execute();
 
@@ -230,23 +186,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                 ($search != "" && $select != "") {
 
 
-                    if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
+                    $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'  AND assigned_to=?";
 
-                        $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'";
+                    $stmt = $mysqli->prepare($sql);
 
-                        $stmt = $mysqli->prepare($sql);
-
-                    } else {
-
-                        $sql = "SELECT * FROM data WHERE $select LIKE '{$search}%'  AND id=?";
-
-                        $stmt = $mysqli->prepare($sql);
-
-                        $stmt->bind_param('s', $_SESSION['user_id']);
-                    }
-
-
-
+                    $stmt->bind_param('s', $_SESSION['username']);
 
                     $stmt->execute();
 
@@ -283,13 +227,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                                 <th scope='col'>Lead Date</th>
                                                 <th scope='col'>Comments</th>
                                                 <th scope='col'>Follow Up Date</th>
-                                                <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                                    ?>
-                                                    <th scope='col'>Assigned To</th>
-                                                    <?php
-                                                }
-
-                                                ?>
+                                                <th scope='col'>Assigned To</th>
                                                 <th scope='col'></th>
                                             </tr>
                                         </thead>
@@ -317,13 +255,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                                 <td><?php echo $row['lead_date'] ?></td>
                                                 <td><?php echo $row['comments'] ?></td>
                                                 <td><?php echo $row['followup_date'] ?></td>
-                                                <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                                    ?>
-                                                    <td><?php echo $row['assigned_to'] ?></td>
-                                                    <?php
-                                                }
 
-                                                ?>
+                                                <td><?php echo $row['assigned_to'] ?></td>
+
                                                 <td>
                                                     <div class="dropdown">
                                                         <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -336,11 +270,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                                                         name="s_no" value="<?php echo $row["s_no"] ?>"><button
                                                                         class="dropdown-item" type="submit">Update</button></form>
                                                             </li>
-                                                            <li>
-                                                                <form action="delete.php" method="get"><input style="display:none"
-                                                                        name="s_no" value="<?php echo $row["s_no"] ?>"><button
-                                                                        class="dropdown-item" type="submit">Delete</button></form>
-                                                            </li>
+
 
                                                         </ul>
                                                     </div>
@@ -351,17 +281,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                                         }
                                         echo "</table>";
                                         ?>
-                                            <?php if (@isset($_SESSION['admin']) && @$_SESSION['admin'] == 1) {
-                                                ?>
-                                                <form action="export.php" method="POST">
-                                                    <select name="export_file_type" class="form-control">
-                                                        <option value="xlsx">XLSX</option>
-                                                        <option value="xls">XLS</option>
-                                                        <option value="csv">CSV</option>
-                                                    </select>
-                                                    <button type="submit" name="export_excel_btn"
-                                                        class="btn btn-primary mt-3">Export</button>
-                                                </form><?php }
+
+                                            <form action="export.php" method="POST">
+                                                <select name="export_file_type" class="form-control">
+                                                    <option value="xlsx">XLSX</option>
+                                                    <option value="xls">XLS</option>
+                                                    <option value="csv">CSV</option>
+                                                </select>
+                                                <button type="submit" name="export_excel_btn"
+                                                    class="btn btn-primary mt-3">Export</button>
+                                            </form><?php
                     } else {
                         echo "Data Not found";
                     }
