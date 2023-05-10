@@ -29,11 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $assigned_to = $_POST['assigned_to'];
     // $sql = "SELECT * from user where username = '$username'";
     // $result = mysqli_query($conn, $sql);
-    $query = "INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `followup_date`, `created_at`, `assigned_to`) VALUES (null, '$name', '$number', '$email', '$state','$gender', '$age', '$height', '$weight', '$lookingfor', '$attended_dc', '$exp_date_dc', '$attended_mhf', '$exp_date_mhf', '$currentstatus', '$leaddate', '$comments', '$followupdate', current_timestamp(), '$assigned_to')";
+    $stmt = $mysqli->prepare("INSERT INTO `data` (`s_no`, `name`, `phone`, `email`, `state`, `gender`, `age`, `height`, `weight`, `looking_for`, `attended_dc`, `exp_date_dc`, `attended_mhf`, `exp_date_mhf`, `current_status`, `lead_date`, `comments`, `followup_date`, `created_at`, `assigned_to`) VALUES (null, '$name', '$number', '$email', '$state','$gender', '$age', '$height', '$weight', '$lookingfor', '$attended_dc', '$exp_date_dc', '$attended_mhf', '$exp_date_mhf', '$currentstatus', '$leaddate', '$comments', '$followupdate', current_timestamp(), '$assigned_to')");
 
-    $result = mysqli_query($conn, $query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $num = $stmt->affected_rows;
+
     // $numExistRows = mysqli_num_rows($result);////
-    if ($result) {
+    if ($num == 1) {
         echo "<script>alert('data Inserted')</script>";
     }
 
