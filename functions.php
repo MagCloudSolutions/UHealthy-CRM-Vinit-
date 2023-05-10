@@ -160,7 +160,7 @@ function login($username, $password)
     $username = filter_var($username, FILTER_SANITIZE_STRING);
     $password = filter_var($password, FILTER_SANITIZE_STRING);
 
-    $sql = "SELECT username, password,admin,caller,s_no FROM user WHERE username=?";
+    $sql = "SELECT username, password FROM user WHERE username=?";
 
     $stmt = $mysqli->prepare($sql);
 
@@ -185,12 +185,7 @@ function login($username, $password)
         return "Wrong username or password";
 
     } else {
-        if ($data['admin'] != 0) {
-            $_SESSION['admin'] = $data['admin'];
-        }
-        if ($data['caller'] != 0) {
-            $_SESSION['caller'] = $data['caller'];
-        }
+
         $_SESSION['user_id'] = $data['s_no'];
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $username;
