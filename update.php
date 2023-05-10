@@ -301,35 +301,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
 
-                    <div class="input-box">
-                        <span class="details">Assign</span>
-                        <select name="assigned_to" type="text">
-                            <option value="<?php echo $row["id"] ?>"><?php echo $row["assigned_to"] ?></option>
-                            <?php
 
-                                        $mysqli = connect();
-                                        $sql = "SELECT * FROM user WHERE admin = 0";
-
-                                        $stmt = $mysqli->prepare($sql);
-
-                                        // $stmt->bind_param('s', $_SESSION['user_id']);
-                            
-                                        $stmt->execute();
-
-                                        $result_c = $stmt->get_result();
-
-                                        ?>
-
-                            <?php
-                                        while ($callers = $result_c->fetch_assoc()) {
-                                            ?>
-                            <option value="<?php echo $callers["s_no"] ?>"><?php echo $callers["username"] ?></option>
-
-                            <?php }
-
-                                        ?>
-                        </select>
-                    </div>
 
 
                 </div>
