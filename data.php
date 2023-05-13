@@ -128,7 +128,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || !isset($_S
 
 
                                 <form action="update.php" method="get"><input style="display:none" name="s_no"
-                                        value="<?php echo $row["s_no"] ?>"><button class="btn"
+                                        value="<?php echo $row["s_no"] ?>"><button class="btn btn-outline-dark"
                                         type="submit">Update</button></form>
 
 

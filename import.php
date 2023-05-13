@@ -3,11 +3,7 @@
 
 require "functions.php";
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
-    header('Location: index.php');
-    exit;
-}
-if (!@isset($_SESSION['admin']) || @$_SESSION['admin'] != 1) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || !isset($_SESSION['username'])) {
     header('Location: index.php');
     exit;
 }

@@ -1,11 +1,6 @@
 <?php
 include "functions.php";
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
-    header('Location: index.php');
-    exit;
-}
-
-if (!@isset($_SESSION['admin']) || @$_SESSION['admin'] != 1) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || !isset($_SESSION['username'])) {
     header('Location: index.php');
     exit;
 }
@@ -25,8 +20,8 @@ if (isset($_POST['export_excel_btn'])) {
     $mysqli = connect();
     $file_ext_name = $_POST['export_file_type'];
     $fileName = "Data-management";
-
-    $sql = "SELECT * FROM data";
+    $username = $_SESSION["username"];
+    $sql = "SELECT * FROM data WHERE assigned_to = '$username'";
     $stmt = $mysqli->prepare($sql);
 
     $stmt->execute();
@@ -58,7 +53,6 @@ if (isset($_POST['export_excel_btn'])) {
         $sheet->setCellValue('Q1', 'Comments');
         $sheet->setCellValue('R1', 'Follow Up Date');
         $sheet->setCellValue('S1', 'Assigned To');
-        $sheet->setCellValue('T1', 'Caller ID');
 
         $rowCount = 2;
         $i = 1;
@@ -82,7 +76,6 @@ if (isset($_POST['export_excel_btn'])) {
             $sheet->setCellValue('Q' . $rowCount, $data['comments']);
             $sheet->setCellValue('R' . $rowCount, $data['followup_date']);
             $sheet->setCellValue('S' . $rowCount, $data['assigned_to']);
-            $sheet->setCellValue('T' . $rowCount, $data['id']);
             $rowCount++;
             $i++;
         }
