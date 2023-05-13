@@ -133,10 +133,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="input-box">
                         <span class="details">Current Status</span>
                         <select name="currentstatus" type="text">
-                            <option value="Paid & Joined Club">Paid & Joined Club</option>
-                            <option value="Interested but didn't pay">Interested but didn't pay</option>
-                            <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
                             <option value="Not Interested">Not Interested</option>
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+
                         </select>
                     </div>
                     <div class="input-box">
@@ -180,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <?php
                             while ($callers = $result_c->fetch_assoc()) {
                                 ?>
-                                <option value="<?php echo $callers["s_no"] ?>"><?php echo $callers["username"] ?></option>
+                            <option value="<?php echo $callers["s_no"] ?>"><?php echo $callers["username"] ?></option>
 
                             <?php }
 
@@ -201,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-            </script>
+        </script>
         <script src="index.js"></script>
     </body>
 

@@ -244,27 +244,68 @@ if (isset($_POST['submit'])) {
                             <option value="<?php echo $row['current_status'] ?>"><?php echo $row['current_status'] ?>
                             </option>';
                             <?php
-                                    if ($row['current_status'] == "Paid & Joined Club") {
+                                    if ($row['current_status'] == "Just Landed") {
                                         ?>
-                            <option value="Interested but did not  pay">Interested but did not pay</option>
-                            <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
                             <option value="Not Interested">Not Interested</option>
-                            <?php } else if ($row['current_status'] == "Interested but did not pay") {
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+                            <?php } else if ($row['current_status'] == "Call Not Picked") {
                                         ?>
-                            <option value="Paid & Joined Club">Paid & Joined Club</option>
-                            <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
                             <option value="Not Interested">Not Interested</option>
-                            <?php } else if ($row['current_status'] == "Not Reachable/Call Not Picked") {
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+                            <?php } else if ($row['current_status'] == "Wrong/Invalid Number") {
                                         ?>
-                            <option value="Paid & Joined Club">Paid & Joined Club</option>
-                            <option value="Interested but did not pay">Interested but did not pay</option>
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
                             <option value="Not Interested">Not Interested</option>
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+                            <?php } else if ($row['current_status'] == "Not Interested") {
+                                        ?>
+
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+                            <?php } else if ($row['current_status'] == "Session attended but not replying") {
+                                        ?>
+
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
+                            <option value="Not Interested">Not Interested</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+                            <option value="Joined Club Membership">Joined Club Membership</option>
+                            <?php } else if ($row['current_status'] == "Interested but didn't join") {
+                                        ?>
+
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
+                            <option value="Not Interested">Not Interested</option>
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+
+                            <option value="Joined Club Membership">Joined Club Membership</option>
 
                             <?php } else {
                                         ?>
-                            <option value="Paid & Joined Club">Paid & Joined Club</option>
-                            <option value="Interested but did not pay">Interested but did not pay</option>
-                            <option value="Not Reachable/Call Not Picked">Not Reachable/Call Not Picked</option>
+                            <option value=" Just Landed"> Just Landed</option>
+                            <option value="Call Not Picked">Call Not Picked</option>
+                            <option value="Wrong/Invalid Number">Wrong/Invalid Number</option>
+                            <option value="Not Interested">Not Interested</option>
+                            <option value="Session attended but not replying">Session attended but not replying</option>
+                            <option value="Interested but didn't join">Interested but didn't join</option>
+
                             <?php }
                                     ?>
                         </select>
