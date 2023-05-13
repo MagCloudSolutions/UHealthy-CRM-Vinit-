@@ -142,7 +142,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || !isset($_S
                                 }
                                 echo "</table>";
                                 ?>
-                        <form action="export.php" method="POST" style="display:flex;margin-top:35px">
+                        <form action="export.php" method="POST" style="display:flex;margin:35px 0">
                             <select name="export_file_type" class="form-control" style="width:25%">
                                 <option value="xlsx">XLSX</option>
                                 <option value="xls">XLS</option>

@@ -34,9 +34,10 @@ footer>p>span {
 footer>p>a {
     font-size: medium;
     color: black;
+    text-decoration: none;
 }
 </style>
 <footer>
-    <p>© 2023 - All Rights Reserved <span>uHealthy</span>.</p>
+    <p>© 2023 - All Rights Reserved <span>UHealthy</span>.</p>
     <p>Designed and Developed by: <a href="https://www.magcloudsolutions.in/">Mag Cloud Solutions Pvt Ltd</a></p>
 </footer>
